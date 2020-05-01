@@ -1,31 +1,28 @@
-import React, { useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
+import React, { useContext } from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import Card from "@material-ui/core/Card"
+import CardActions from "@material-ui/core/CardActions"
+import CardContent from "@material-ui/core/CardContent"
+import Button from "@material-ui/core/Button"
+import Typography from "@material-ui/core/Typography"
+import Grid from "@material-ui/core/Grid"
 
 const useStyles = makeStyles({
   title: {
     fontSize: 14,
   },
-});
+})
 
 export default function Cards(props) {
-  const classes = useStyles();
-  const { data, stateData } = { ...props };
+  const classes = useStyles()
+  const { data, stateData } = { ...props }
 
-  console.log(data, stateData);
+  console.log(data, stateData)
 
   return (
     <Grid style={{ padding: 5, textAlign: "center" }} container spacing={1}>
-      <Grid item  md={6} lg={3}>
-        <Card
-          variant="outlined"
-          style={{ color: "#dc3545" }}
-        >
+      <Grid item md={6} lg={3}>
+        <Card variant="outlined" style={{ color: "#dc3545" }}>
           <CardContent>
             <Typography variant="p" component="h6">
               Confirmed
@@ -40,16 +37,13 @@ export default function Cards(props) {
         </Card>
       </Grid>
       <Grid item md={6} lg={3}>
-        <Card
-          variant="outlined"
-          style={{ color: "blue" }}
-        >
+        <Card variant="outlined" style={{ color: "blue" }}>
           <CardContent>
             <Typography variant="p" component="h6">
-            Active
+              Active
             </Typography>
             <Typography variant="p" component="h6">
-                  &nbsp; 
+              &nbsp;
             </Typography>
             <Typography variant="p" component="h5">
               {data.data.statewise[0].active}
@@ -58,10 +52,7 @@ export default function Cards(props) {
         </Card>
       </Grid>
       <Grid item md={6} lg={3}>
-        <Card
-          variant="outlined"
-          style={{ color: "#28a745" }}
-        >
+        <Card variant="outlined" style={{ color: "#28a745" }}>
           <CardContent>
             <Typography variant="p" component="h6">
               Recovered
@@ -76,10 +67,7 @@ export default function Cards(props) {
         </Card>
       </Grid>
       <Grid item md={6} lg={3}>
-        <Card
-          variant="outlined"
-          style={{ color: "#343a40" }}
-        >
+        <Card variant="outlined" style={{ color: "#343a40" }}>
           <CardContent>
             <Typography variant="p" component="h6">
               Deceased
@@ -94,5 +82,5 @@ export default function Cards(props) {
         </Card>
       </Grid>
     </Grid>
-  );
+  )
 }
