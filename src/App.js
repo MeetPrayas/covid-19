@@ -4,23 +4,25 @@ import Graph from "./view/graph"
 import SearchAppBar from "./view/AppBar"
 import Cards from "./view/Cards"
 import axios from "axios"
-import { makeStyles, useTheme } from "@material-ui/core/styles"
 import CustomizedTables from "./view/Table"
 import Grid from "@material-ui/core/Grid"
+import Footer from "./view/footer"
+import DeltaGraph from "./view/DeltaGraph"
+import Paper from "@material-ui/core/Paper"
+import { makeStyles } from "@material-ui/core/styles"
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     marginTop: theme.spacing(8),
-//     @keyframes example {
-//       0%   {background-color: red;}
-//       25%  {background-color: yellow;}
-//       50%  {background-color: blue;}
-//       100% {background-color: green;}
-//     }
-//   },
-// }))
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+    "& > *": {
+      margin: theme.spacing(1),
+    },
+  },
+}))
 
 export default function App(props) {
+  const classes = useStyles()
   const [data, setData] = useState(null)
   const [stateData, setStateData] = useState(null)
   useEffect(() => {
@@ -45,16 +47,30 @@ export default function App(props) {
         ""
       )}
       <div style={{ margin: "0 5%" }}>
-        <h2 align="center">Current status in India</h2>
+        <h2 align="center">Current status of Covid-19 in India</h2>
         {data && stateData ? <Cards data={data} stateData={stateData} /> : ""}
         <Grid container style={{ marginTop: "10px" }} spacing={2}>
-          <Grid item xs={12} xs={12} sm={12} md={12} lg={6} xl={6}>
-            {data && stateData ? (
-              <Graph data={data} stateData={stateData} />
-            ) : (
-              ""
-            )}
-          </Grid>
+          {data && stateData ? (
+            <Grid
+              item
+              xs={12}
+              xs={12}
+              sm={12}
+              md={12}
+              lg={6}
+              xl={6}
+              spacing={2}
+            >
+              <Paper style={{ marginBottom: "1rem" }} elevation={3}>
+                <Graph data={data} />
+              </Paper>
+              <Paper style={{ marginBottom: "1rem" }} elevation={3}>
+                <DeltaGraph data={data} />
+              </Paper>
+            </Grid>
+          ) : (
+            ""
+          )}
           <Grid item xs={12} xs={12} sm={12} md={12} lg={6} xl={6}>
             {data && stateData ? (
               <CustomizedTables data={data} stateData={stateData} />
@@ -64,6 +80,7 @@ export default function App(props) {
           </Grid>
         </Grid>
       </div>
+      <Footer />
     </div>
   )
 }

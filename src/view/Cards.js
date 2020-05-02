@@ -21,7 +21,7 @@ export default function Cards(props) {
 
   return (
     <Grid style={{ padding: 5, textAlign: "center" }} container spacing={1}>
-      <Grid item md={6} lg={3}>
+      <Grid item xs={6} xs={6} sm={6} md={6} lg={3} xl={3}>
         <Card variant="outlined" style={{ color: "#dc3545" }}>
           <CardContent>
             <Typography variant="p" component="h6">
@@ -36,7 +36,7 @@ export default function Cards(props) {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item md={6} lg={3}>
+      <Grid item xs={6} xs={6} sm={6} md={6} lg={3} xl={3}>
         <Card variant="outlined" style={{ color: "blue" }}>
           <CardContent>
             <Typography variant="p" component="h6">
@@ -51,7 +51,7 @@ export default function Cards(props) {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item md={6} lg={3}>
+      <Grid item xs={6} xs={6} sm={6} md={6} lg={3} xl={3}>
         <Card variant="outlined" style={{ color: "#28a745" }}>
           <CardContent>
             <Typography variant="p" component="h6">
@@ -66,7 +66,7 @@ export default function Cards(props) {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item md={6} lg={3}>
+      <Grid item xs={6} xs={6} sm={6} md={6} lg={3} xl={3}>
         <Card variant="outlined" style={{ color: "#343a40" }}>
           <CardContent>
             <Typography variant="p" component="h6">

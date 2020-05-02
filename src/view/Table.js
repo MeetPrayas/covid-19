@@ -110,7 +110,7 @@ export default function CustomizedTables(props) {
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} style={{ wordWrap: "break-word" }}>
       <Table
         className={classes.table}
         aria-label="customized table"

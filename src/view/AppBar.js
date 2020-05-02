@@ -61,6 +61,21 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  "@keyframes blinker": {
+    from: { opacity: 1 },
+    to: { opacity: 0 },
+  },
+  headerGT: {
+    animationName: "$blinker",
+    animationDuration: "1s",
+    animationTimingFunction: "linear",
+    animationIterationCount: "infinite",
+    backgroundColor: "red",
+    width: "20px",
+    height: "20px",
+    borderRadius: "10px",
+    marginRight: "1rem",
+  },
 }))
 
 export default function SearchAppBar() {
@@ -70,17 +85,19 @@ export default function SearchAppBar() {
     <div className={classes.root}>
       <AppBar position="static" style={{ backgroundColor: "black" }}>
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
+          <span className={classes.headerGT}></span>
           <Typography className={classes.title} variant="h6" noWrap>
             Covid-19 live Tracker
           </Typography>
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
