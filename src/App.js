@@ -28,17 +28,14 @@ export default function App(props) {
   useEffect(() => {
     axios.get("https://api.covid19india.org/data.json").then((response) => {
       setData(response)
-      console.log(response)
     })
     axios
       .get("https://api.covid19india.org/state_district_wise.json")
       .then((response) => {
         setStateData(response)
-        console.log(response)
       })
   }, [])
 
-  console.log(data, stateData)
   return (
     <div>
       {data && stateData ? (
@@ -50,6 +47,13 @@ export default function App(props) {
         <h2 align="center">Current status of Covid-19 in India</h2>
         {data && stateData ? <Cards data={data} stateData={stateData} /> : ""}
         <Grid container style={{ marginTop: "10px" }} spacing={2}>
+          <Grid item xs={12} xs={12} sm={12} md={12} lg={6} xl={6}>
+            {data && stateData ? (
+              <CustomizedTables data={data} stateData={stateData} />
+            ) : (
+              ""
+            )}
+          </Grid>
           {data && stateData ? (
             <Grid
               item
@@ -67,17 +71,13 @@ export default function App(props) {
               <Paper style={{ marginBottom: "1rem" }} elevation={3}>
                 <DeltaGraph data={data} />
               </Paper>
+              {/* <Paper style={{ marginBottom: "1rem" }} elevation={3}>
+                
+              </Paper> */}
             </Grid>
           ) : (
             ""
           )}
-          <Grid item xs={12} xs={12} sm={12} md={12} lg={6} xl={6}>
-            {data && stateData ? (
-              <CustomizedTables data={data} stateData={stateData} />
-            ) : (
-              ""
-            )}
-          </Grid>
         </Grid>
       </div>
       <Footer />

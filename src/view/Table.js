@@ -9,6 +9,7 @@ import TableRow from "@material-ui/core/TableRow"
 import ArrowRightIcon from "@material-ui/icons/ArrowRight"
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown"
 import React, { useState } from "react"
+import produce from "immer"
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -17,6 +18,7 @@ const StyledTableCell = withStyles((theme) => ({
   },
   body: {
     fontSize: 13,
+    padding: "0px",
   },
 }))(TableCell)
 
@@ -37,36 +39,53 @@ const useStyles = makeStyles({
 export default function CustomizedTables(props) {
   const classes = useStyles()
   const { data, stateData } = { ...props }
-  const [state, setState] = useState(null)
+  const [state, setState] = useState({ name: "", visible: false })
 
   const stateRow = data.data.statewise.slice(1)
-  const rows = stateRow.map((key) => {
-    return {
-      state: key.state,
-      total:
-        key.deltarecovered !== "0"
-          ? key.confirmed + " (+" + key.deltaconfirmed + ")"
-          : key.confirmed,
-      active: key.active,
-      recovered:
-        key.deltarecovered !== "0"
-          ? key.recovered + " (+" + key.deltarecovered + ")"
-          : key.recovered,
-      deceased:
-        key.deltadeaths !== "0"
-          ? key.deaths + " (+" + key.deltadeaths + ")"
-          : key.deaths,
-    }
+  const rows = []
+  stateRow.map((key) => {
+    if (key.confirmed !== "0")
+      rows.push({
+        state: key.state,
+        total:
+          key.deltarecovered !== "0"
+            ? key.confirmed + " (+" + key.deltaconfirmed + ")"
+            : key.confirmed,
+        active: key.active,
+        recovered:
+          key.deltarecovered !== "0"
+            ? key.recovered + " (+" + key.deltarecovered + ")"
+            : key.recovered,
+        deceased:
+          key.deltadeaths !== "0"
+            ? key.deaths + " (+" + key.deltadeaths + ")"
+            : key.deaths,
+      })
   })
 
-  console.log(stateData.data)
-
+  const drawer = (name) => {
+    setState(
+      produce(state, (draft) => {
+        if (name === draft.name) {
+          return {
+            name: name,
+            visible: !draft.visible,
+          }
+        } else {
+          return {
+            name: name,
+            visible: true,
+          }
+        }
+      }),
+    )
+  }
   const extraRow = () => {
     var eRow = []
-    if (!stateData.data[state]) return null
+    if (!stateData.data[state.name]) return null
 
-    for (var key in stateData.data[state].districtData) {
-      var temp = stateData.data[state].districtData[key]
+    for (var key in stateData.data[state.name].districtData) {
+      var temp = stateData.data[state.name].districtData[key]
       eRow.push({
         dName: key,
         active: temp.active,
@@ -84,6 +103,7 @@ export default function CustomizedTables(props) {
             : temp.recovered,
       })
     }
+
     return eRow.map((row) => (
       <StyledTableRow key={row.dName}>
         <StyledTableCell
@@ -108,7 +128,6 @@ export default function CustomizedTables(props) {
       </StyledTableRow>
     ))
   }
-
   return (
     <TableContainer component={Paper} style={{ wordWrap: "break-word" }}>
       <Table
@@ -131,7 +150,7 @@ export default function CustomizedTables(props) {
               <StyledTableRow
                 key={row.state}
                 onClick={(e) => {
-                  setState(row.state)
+                  drawer(row.state)
                 }}
               >
                 <StyledTableCell
@@ -159,8 +178,7 @@ export default function CustomizedTables(props) {
                   {row.deceased}
                 </StyledTableCell>
               </StyledTableRow>
-
-              {state === row.state ? extraRow() : null}
+              {state.name === row.state && state.visible ? extraRow() : null}
             </>
           ))}
         </TableBody>
